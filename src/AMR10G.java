@@ -1,83 +1,38 @@
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Arrays;
 
-/**
- * Created by sreedish.ps on 27/12/14.
- */
-public class GSS1 {
-  static int tree[];
-  static Integer N;
-  static int[] arr;
-
+public class AMR10G {
   public static void main(String[] args) throws IOException {
+    Reader sc = new Reader();
+    int T = sc.nextInt();
+    while(T-- > 0){
+      Integer N = sc.nextInt();
+      Integer K = sc.nextInt();
 
-    Reader in = new Reader();
-    PrintWriter out = new PrintWriter(System.out, true);
-    N = in.nextInt();
+      Integer kids[] = new Integer[N];
 
-    arr = new int[N];
-    for (int i = 0; i < N; i++) {
-      arr[i] = in.nextInt();
+      for(Integer i = 0; i <N;i++){
+        kids[i] = sc.nextInt();
+      }
+
+      Arrays.sort(kids);
+
+      Integer difference = Integer.MAX_VALUE;
+
+      for(int i=0;i<= N-K ; i++){
+        Integer temp =     kids[i+K-1] - kids[i];
+         if(temp < difference){
+           difference =  temp;
+         }
+      }
+
+      System.out.println(difference);
     }
-
-    SegmentTree root = new SegmentTree(0, N - 1);
-
-    int t = in.nextInt();
-    while (t-- > 0) {
-      int a = in.nextInt(), b = in.nextInt();
-      out.println(root.query(a-1, b-1).max);
-    }
-
   }
 
-  static class SegmentTree {
-    SegmentTree leftChild;
-    SegmentTree rightChild;
-    int sum, leftMax, rightMax, max;
-    int start, end;
 
-    public SegmentTree(int start, int end) {
-      this.start = start;
-      this.end = end;
-
-      if (start != end) {
-        int mid = start + ((end - start) >> 2 );
-        leftChild = new SegmentTree(start, mid);
-        rightChild = new SegmentTree(mid + 1, end);
-        join(this, leftChild, rightChild);
-      } else {
-        sum = leftMax = rightMax = max = arr[start];
-      }
-    }
-
-    private void join(SegmentTree root, SegmentTree leftChild,
-                      SegmentTree rightChild) {
-      root.sum = leftChild.sum + rightChild.sum;
-      root.leftMax = Math.max(leftChild.leftMax,
-          leftChild.sum + rightChild.leftMax);
-      root.rightMax = Math.max(rightChild.rightMax,
-          rightChild.sum + leftChild.rightMax);
-      root.max = Math.max(Math.max(leftChild.max, rightChild.max),
-          leftChild.rightMax + rightChild.leftMax);
-    }
-    public SegmentTree () {}
-
-    public SegmentTree query(int a, int b) {
-      if (a == start && end == b) {
-        return this;
-      }
-      int mid = start + ((end - start) >> 2 );
-      if (a > mid) return rightChild.query(a, b);
-      if (b <= mid) return leftChild.query(a, b);
-
-      SegmentTree ans = new SegmentTree();
-      join(ans, leftChild.query(a, mid), rightChild.query(mid + 1, b));
-      return ans;
-
-    }
-  }
 
   /**
    * Faster input
@@ -166,4 +121,5 @@ public class GSS1 {
       din.close();
     }
   }
+
 }
