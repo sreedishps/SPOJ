@@ -1,5 +1,5 @@
-import java.util.HashMap;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  * Created by sreedish.ps on 15/05/15.
@@ -7,32 +7,22 @@ import java.util.Scanner;
 public class PERMUT2 {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    Integer N;
-    while ((N = sc.nextInt()) != 0) {
-      boolean flag = false;
-      HashMap hm = new HashMap();
-        for(int i =1;i<= N;i++){
-        int num = sc.nextInt();
-        if(i == num){
-          continue;
-        }
-        if(hm.containsKey(num)){
-          if((Integer)hm.get(num) == i){
-            hm.remove(num);
-            continue;
-          }else {
-            flag = true;
-            System.out.println("not ambiguous");
-            break;
-          }
-        }else {
-          hm.put(i,num);
+    Integer n;
+    while ((n = Integer.parseInt(sc.nextLine())) != 0) {
+      Integer permutation[] = new Integer[n+1];
+      StringTokenizer tokenizer = new StringTokenizer(sc.nextLine());
+      for (int i = 1; i <= n; i++)
+        permutation[i] = Integer.parseInt(tokenizer.nextToken());
+      boolean isAmbiguous = true;
+      for (int i = 1; i <= n; i++) {
+        if (permutation[permutation[i]] != i) {
+          isAmbiguous = false;
+          System.out.println("not ambiguous");
+          break;
         }
       }
-
-      if(!flag)
-      System.out.println("ambiguous");
-
+      if (isAmbiguous)
+        System.out.println("ambiguous");
     }
 
   }
