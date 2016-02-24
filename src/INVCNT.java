@@ -9,12 +9,12 @@ public class INVCNT {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     Integer T = Integer.parseInt(br.readLine());
     while (T-- > 0) {
-      br.readLine();
-      counter = 0l;
+       counter = 0l;
       Integer N = Integer.parseInt(br.readLine());
       Integer arr[] = new Integer[N];
+      String temp[] = br.readLine().split(" ");
       for (int i = 0; i < N; i++) {
-        arr[i] = Integer.parseInt(br.readLine());
+        arr[i] = Integer.parseInt(temp[i]);
       }
       mergeSortModified(arr, 0, N - 1);
 //      for (int i = 0; i < N; i++) {
