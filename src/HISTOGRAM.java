@@ -70,7 +70,7 @@ public class HISTOGRAM {
 
             int counter = 0;
             int index = -1;
-            
+
             while (!stk.isEmpty()){
                 index = stk.pop();
                 counter++;
